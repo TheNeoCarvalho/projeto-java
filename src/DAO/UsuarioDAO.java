@@ -48,7 +48,9 @@ public class UsuarioDAO {
             if(rs != null){
                 while(rs.next()){
                   Usuario u = new Usuario();
-                  u.setNome(rs.getString(1));
+                  u.setId(rs.getInt(1));                  
+                  u.setNome(rs.getString(2));
+
                   lista.add(u);
                 }
                 return lista;
