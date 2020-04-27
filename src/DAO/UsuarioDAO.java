@@ -2,6 +2,8 @@ package DAO;
 import Factory.ConnectionFactory;
 import java.sql.*;
 import Modelo.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +33,32 @@ public class UsuarioDAO {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+    
+    public List<Usuario> ListaCombo(){
+    
+        String sql = "SELECT * FROM usuario ORDER BY nome";
+        List<Usuario> lista = new ArrayList<>();
+        
+        try{
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                  Usuario u = new Usuario();
+                  u.setNome(rs.getString(1));
+                  lista.add(u);
+                }
+                return lista;
+            }else{
+                return null;
+            }
+            
+        }catch(Exception ex){
+           return null;
+        }
     }
     
 }

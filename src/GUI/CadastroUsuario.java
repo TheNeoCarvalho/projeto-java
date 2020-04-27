@@ -152,7 +152,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             public void run() {
                 new CadastroUsuario().setVisible(true);
             }
-        });0
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
