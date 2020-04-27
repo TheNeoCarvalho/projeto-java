@@ -30,7 +30,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         
         List<Usuario> lista = new ArrayList<>();
         lista = dao.ListaCombo();
-        jComboBox1.addItem("");
+        jComboBox1.addItem("Selecione o usuário");
         
         for(Usuario u: lista){
             jComboBox1.addItem(u.getNome());
@@ -56,8 +56,6 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Consultar");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Sair");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
