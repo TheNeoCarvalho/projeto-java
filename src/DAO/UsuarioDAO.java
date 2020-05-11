@@ -3,8 +3,6 @@ import Factory.ConnectionFactory;
 import java.sql.*;
 import Modelo.Usuario;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 public class UsuarioDAO {
@@ -36,7 +34,7 @@ public class UsuarioDAO {
     }
     
     
-    public List<Usuario> ListaUsuario(){
+    public List<Usuario> ListaUsuarios(){
     
         String sql = "SELECT * FROM usuario ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
@@ -80,4 +78,77 @@ public class UsuarioDAO {
             return ex.getMessage();
         }
     }
+    
+    public String AlteraUsuario(Usuario u){
+        String sql = "UPDATE usuario SET nome = ?, cpf = ?, email = ?, telefone = ? WHERE id = ?";
+        
+        try{
+           PreparedStatement stmt = connection.prepareStatement(sql);
+           
+           stmt.setString(1, u.getNome());
+           stmt.setString(2, u.getCpf());
+           stmt.setString(3, u.getEmail());
+           stmt.setString(4, u.getTelefone());
+           stmt.setInt(5, u.getId());
+           
+           if(stmt.executeUpdate() > 0){
+                return "Atualizado com sucesso!";
+            }else{
+                return "Erro ao Atualizar!";
+            }
+        }catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+    
+    public boolean TestaIdUsuario(int id){
+        boolean resultado = false;
+        String sql = "SELECT * FROM usuario WHERE id = "+id;
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                   resultado = true;     
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+        return resultado;
+    } 
+    
+    
+    public List<Usuario> ListaUsuario(int id){
+    
+        String sql = "SELECT * FROM usuario WHERE id = "+id;
+        List<Usuario> lista = new ArrayList<>();
+        
+        PreparedStatement stmt;
+        try {
+            stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    Usuario u = new Usuario();
+                    
+                    u.setNome(rs.getString(2));
+                    u.setCpf(rs.getString(3));
+                    u.setEmail(rs.getString(4));
+                    u.setTelefone(rs.getString(5));
+                    
+                    lista.add(u);
+                }
+                return lista;
+            }else{
+               return null; 
+            }
+        } catch (SQLException ex) {
+           return null;
+        }
+    }
+    
 }
